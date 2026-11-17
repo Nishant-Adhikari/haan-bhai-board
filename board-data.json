@@ -42,19 +42,19 @@
       },
       {
         "note": "DISPATCHED Nov 16, 2026 to a Codex worker — worktree `.worktrees/feature-capitals-quiz`, branch `feature/capitals-quiz` (from origin/main 1b39ba5), surface 1000090049 [terminal]. (Brief is the amended Nov 14 version: four 10-question quizzes — country capitals, US state capitals, country food, famous buildings; Stop button on every question, wrong answers never red.), surface 1000090049",
-        "tag": "waiting",
-        "tag_label": "WAITING",
+        "tag": "working",
+        "tag_label": "WORKING",
         "text": "Capitals Quiz"
       },
       {
         "note": "DISPATCHED Nov 16, 2026 to a Codex worker — worktree `.worktrees/feature-reading-aesop-link`, branch `feature/reading-aesop-link` (from origin/main 1b39ba5), surface 1000090050 [terminal]. One Aesop's Fables link/card on reading.html pointing to aesop.html; runs after Capitals Quiz., surface 1000090050",
-        "tag": "waiting",
-        "tag_label": "WAITING",
+        "tag": "working",
+        "tag_label": "WORKING",
         "text": "Reading → Aesop link"
       }
     ]
   },
-  "as_of": "Tue Nov 17, 2026 · 4:44 PM CT",
+  "as_of": "Tue Nov 17, 2026 · 4:49 PM CT",
   "flixkeep": {
     "backlog": [
       {
@@ -123,8 +123,8 @@
       },
       {
         "note": "DISPATCHED Nov 16, 2026 to a Codex worker — worktree `.worktrees/fix-backend-newsletter-fixes`, branch `fix/backend-newsletter-fixes` (from origin/main c8a1b81), surface 1000090051 [terminal]. (Nishant approved: TMDB backend fix + newsletter fix.) Fix the $BODY bug in newsletter.yml (and weekly-picks-notification.yml), Resend secrets (RESEND_API_KEY set Nov 16; NEWSLETTER_FROM_EMAIL still needed — do NOT invent it), diagnose the TMDB 500 on the deployed backend, re-run the newsletter / weekend-picks / golden-dataset workflows via workflow_dispatch. Local commits only, no push, no PR, no deploy., surface 1000090051",
-        "tag": "waiting",
-        "tag_label": "WAITING",
+        "tag": "working",
+        "tag_label": "WORKING",
         "text": "Backend + newsletter fixes"
       },
       {
