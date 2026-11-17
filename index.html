@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="300">
+<title>Haan Bhai — Agent Board</title>
+<style>
+  :root {
+    --bg: #05081a;
+    --panel: #0c1334;
+    --panel-border: #2b3a7a;
+    --ink: #e8ecff;
+    --dim: #9aa7d8;
+    --gold: #ffd34d;
+    --green: #4ade80;
+    --cyan: #5eead4;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --blue: #93c5fd;
+    --read: 19px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(1px 1px at 12% 22%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 34% 8%, #cdd7ff 50%, transparent 51%),
+      radial-gradient(2px 2px at 56% 30%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 71% 12%, #ffe9a8 50%, transparent 51%),
+      radial-gradient(1px 1px at 86% 26%, #fff 50%, transparent 51%),
+      radial-gradient(2px 2px at 22% 68%, #cdd7ff 50%, transparent 51%),
+      radial-gradient(1px 1px at 44% 82%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 93% 72%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 5% 48%, #ffe9a8 50%, transparent 51%),
+      radial-gradient(1px 1px at 66% 58%, #fff 50%, transparent 51%);
+    color: var(--ink);
+    font-family: "Courier New", Courier, monospace;
+    font-size: var(--read);
+    line-height: 1.5;
+    overflow-x: clip;
+  }
+  body.day {
+    --bg: #eef1fb;
+    --panel: #ffffff;
+    --panel-border: #8ea2e8;
+    --ink: #141a33;
+    --dim: #4c5a8a;
+    --gold: #92600a;
+    --green: #15803d;
+    --cyan: #0f766e;
+    --amber: #b45309;
+    --red: #b91c1c;
+    --blue: #1d4ed8;
+    background-image: none;
+  }
+  .wrap { max-width: 1560px; margin: 0 auto; padding: 18px 20px 28px; }
+  header { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 24px; justify-content: space-between; }
+  h1 {
+    margin: 0;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-shadow: 3px 3px 0 #00000055;
+  }
+  body.day h1 { text-shadow: 3px 3px 0 #00000022; }
+  .asof { color: var(--dim); font-size: var(--read); }
+  .asof b { color: var(--ink); }
+  .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .toggle {
+    display: inline-flex; border: 2px solid var(--panel-border); border-radius: 4px; overflow: hidden;
+    font-family: inherit; font-size: var(--read);
+  }
+  .toggle button {
+    font-family: inherit; font-size: var(--read); padding: 6px 14px; cursor: pointer;
+    background: transparent; color: var(--dim); border: 0;
+  }
+  .toggle button.on { background: var(--gold); color: #111; font-weight: bold; }
+  .talk {
+    font-family: inherit; font-size: var(--read); font-weight: bold; cursor: pointer;
+    background: var(--gold); color: #111; border: 2px solid var(--gold); border-radius: 4px; padding: 6px 14px;
+  }
+  .statusbar {
+    margin-top: 14px; padding: 10px 14px;
+    border: 2px solid var(--panel-border); border-radius: 6px; background: var(--panel);
+    font-size: var(--read); letter-spacing: 1px;
+  }
+  .statusbar .tok { color: var(--gold); font-weight: bold; }
+  .panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; }
+  .panel {
+    background: var(--panel); border: 2px solid var(--panel-border); border-radius: 8px;
+    padding: 16px 18px 18px; min-width: 0;
+  }
+  .panel h2 { margin: 0 0 2px; font-size: 26px; letter-spacing: 1px; }
+  .engine { color: var(--dim); font-size: 16px; margin-bottom: 12px; }
+  .engine b { color: var(--cyan); }
+  .sec { margin-top: 14px; }
+  .sec > h3 { margin: 0 0 6px; font-size: 18px; letter-spacing: 2px; }
+  .sec.inprog > h3 { color: var(--green); }
+  .sec.backlog > h3 { color: var(--gold); }
+  .sec.done > h3 { color: var(--gold); }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { padding: 7px 0 7px 26px; position: relative; border-top: 1px dashed #ffffff22; }
+  body.day li { border-top-color: #00000022; }
+  li:first-child { border-top: 0; }
+  li::before {
+    content: ""; position: absolute; left: 2px; top: 14px;
+    width: 12px; height: 12px; background: var(--cyan); border-radius: 2px;
+  }
+  .sec.backlog li::before { background: var(--gold); }
+  .sec.done li::before { background: var(--gold); border-radius: 50%; }
+  .tag {
+    display: inline-block; font-size: 14px; font-weight: bold; letter-spacing: 1px;
+    border: 1px solid currentColor; border-radius: 3px; padding: 0 6px; margin-left: 6px;
+    vertical-align: 1px; white-space: nowrap;
+  }
+  .tag.working { color: var(--green); }
+  .tag.idle { color: var(--dim); }
+  .tag.blocked { color: var(--red); }
+  .tag.waiting { color: var(--amber); }
+  .tag.local { color: var(--blue); }
+  .note { color: var(--dim); font-size: 16px; }
+  .empty { color: var(--dim); font-style: italic; }
+  .talkbox {
+    margin-top: 18px; border: 2px solid var(--panel-border); border-radius: 8px;
+    background: var(--panel); padding: 16px 18px;
+  }
+  .talkbox h3 { margin: 0 0 6px; font-size: 20px; color: var(--gold); letter-spacing: 1px; }
+  .talkbox p { margin: 0 0 10px; color: var(--dim); font-size: 16px; }
+  .talkbox form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .talkbox input {
+    flex: 1 1 320px; font-family: inherit; font-size: var(--read); padding: 8px 10px;
+    background: var(--bg); color: var(--ink); border: 2px solid var(--panel-border); border-radius: 4px;
+  }
+  .talkbox button {
+    font-family: inherit; font-size: var(--read); font-weight: bold; cursor: pointer;
+    background: var(--gold); color: #111; border: 2px solid var(--gold); border-radius: 4px; padding: 8px 16px;
+  }
+  #talk-status { margin-top: 8px; font-size: 16px; min-height: 1.2em; }
+  footer { margin-top: 18px; color: var(--dim); font-size: 15px; }
+  @media (max-width: 1100px) {
+    .panels { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) {
+    :root { --read: 16px; }
+    h1 { font-size: 34px; }
+    .panel h2 { font-size: 23px; }
+  }
+  @media (max-width: 480px) {
+    :root { --read: 15px; }
+    h1 { font-size: 28px; }
+    .wrap { padding: 12px 12px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>HAAN BHAI</h1>
+      <div class="asof">As of <b>Mon Nov 16, 2026 · 9:32 PM CT</b> &middot; refreshes every 5 min</div>
+    </div>
+    <div class="controls">
+      <span class="toggle" role="group" aria-label="Day or night mode">
+        <button id="night-btn" class="on" type="button">NIGHT</button>
+        <button id="day-btn" type="button">DAY</button>
+      </span>
+      <button class="talk" type="button" onclick="document.getElementById('talk-input').focus()">&#128172; TALK TO GOKU</button>
+    </div>
+  </header>
+
+  <div class="statusbar">CODEX &middot; GPT-6-LUNA &middot; MEDIUM &nbsp;&middot;&nbsp; <span class="tok">TOKENS 80% LEFT</span> &middot; resets Nov 18</div>
+
+  <div class="panels">
+    <section class="panel" id="panel-flixkeep">
+      <h2>FlixKeep</h2>
+      <div class="engine"><b>Codex</b></div>
+      <div class="sec inprog"><h3>IN PROGRESS</h3><ul>
+        <li>Fix Ask FlixKeep reliability <span class="tag local">LOCAL</span> <span class="note">&mdash; Done locally Nov 13, not merged</span></li>
+        <li>Movie DNA taste-pixel grid <span class="tag local">LOCAL</span> <span class="note">&mdash; Done locally Nov 13, not merged</span></li>
+        <li>Mobile fix-check <span class="tag blocked">BLOCKED</span> <span class="note">&mdash; Failed 3x, harness exit 1, worker diagnosing</span></li>
+        <li>Backend + newsletter fixes <span class="tag working">WORKING</span> <span class="note">&mdash; Worker dispatched Nov 16, surface 1000090051</span></li>
+      </ul></div>
+      <div class="sec backlog"><h3>BACKLOG &middot; APPROVED</h3><ul>
+        <li>Post-merge live verification <span class="note">&mdash; Gated on Emergent access question</span></li>
+      </ul></div>
+      <div class="sec done"><h3>DONE</h3><ul>
+        <li>Scout-QA + TMDB fixes merged <span class="note">&mdash; Nov 10</span></li>
+        <li>Movie Starter Pack <span class="tag local">LOCAL</span> <span class="note">&mdash; Done locally Nov 13, not merged</span></li>
+        <li>Backend gaps from QA triage <span class="tag local">LOCAL</span> <span class="note">&mdash; Done locally Nov 13, not merged</span></li>
+        <li>Housekeeping: tests + Dependabot <span class="tag local">LOCAL</span> <span class="note">&mdash; Done locally Nov 13, not merged</span></li>
+      </ul></div>
+    </section>
+
+    <section class="panel" id="panel-ahaan">
+      <h2>Ahaan&rsquo;s World</h2>
+      <div class="engine"><b>Codex</b></div>
+      <div class="sec inprog"><h3>IN PROGRESS</h3><ul>
+        <li>Two-player mode <span class="tag working">WORKING</span> <span class="note">&mdash; Final suite rerun, checks pending, surface 1000090004</span></li>
+        <li>Country Book v2 <span class="tag working">WORKING</span> <span class="note">&mdash; PageFlip testing, surface 1000090002</span></li>
+        <li>Vihaan&rsquo;s quad <span class="tag blocked">BLOCKED</span> <span class="note">&mdash; Waits on two-player landing first, surface 1000090048</span></li>
+        <li>Capitals Quiz <span class="tag waiting">WAITING</span> <span class="note">&mdash; Worker waits on outside-sandbox Chrome check approval, surface 1000090049</span></li>
+        <li>Reading &rarr; Aesop link <span class="tag working">WORKING</span> <span class="note">&mdash; Dispatched Nov 16, surface 1000090050</span></li>
+      </ul></div>
+      <div class="sec backlog"><h3>BACKLOG &middot; APPROVED</h3><ul>
+        <li class="empty">Queue clear — next feature to be discussed</li>
+      </ul></div>
+      <div class="sec done"><h3>DONE</h3><ul>
+        <li>Bike + ice cream <span class="note">&mdash; Published Nov 14</span></li>
+        <li>Aesop&rsquo;s Fables <span class="note">&mdash; Published Nov 14</span></li>
+        <li>Bike-speed boost <span class="note">&mdash; Published Nov 16, merge 1b39ba5, Space = boost</span></li>
+      </ul></div>
+    </section>
+
+    <section class="panel" id="panel-vihaan">
+      <h2>Vihaan&rsquo;s World</h2>
+      <div class="engine"><b>Codex</b></div>
+      <div class="sec inprog"><h3>IN PROGRESS</h3><ul>
+        <li>Harder tactics Pack 2 <span class="tag working">WORKING</span> <span class="note">&mdash; 9 puzzles accepted, browser check pending, surface 1000090001</span></li>
+        <li>Solar system <span class="tag idle">IDLE</span> <span class="note">&mdash; Worker idle-mid-brief, surface 1000090041</span></li>
+        <li>Author&rsquo;s Room count fix <span class="tag local">LOCAL</span> <span class="note">&mdash; Done locally (c888552 + d418824): 7 of 24, 12 systems + 12 organs; browser check blocked, not published, surface 1000090042</span></li>
+        <li>Spelling Bee World Champion section <span class="tag working">WORKING</span> <span class="note">&mdash; Brief ready, dispatched Nov 16</span></li>
+      </ul></div>
+      <div class="sec backlog"><h3>BACKLOG &middot; APPROVED</h3><ul>
+        <li>Cruise Ship Deck 3 tracker <span class="note">&mdash; Needs Vidhu&rsquo;s build input, no brief yet</span></li>
+      </ul></div>
+      <div class="sec done"><h3>DONE</h3><ul>
+        <li>Chess tactics trainer &middot; 12 puzzles <span class="note">&mdash; Published Nov 11</span></li>
+        <li>Publish: sub-navs + Room Life <span class="note">&mdash; Live Nov 11</span></li>
+        <li>Road to State checklist <span class="note">&mdash; Published Nov 11</span></li>
+        <li>Spelling Bee Master pack <span class="note">&mdash; Published Nov 14, bank 162 words</span></li>
+        <li>Author&rsquo;s Room Ch 3 (tendons) <span class="note">&mdash; Published Nov 14</span></li>
+        <li>Cruise Ship Explorer <span class="note">&mdash; Published Nov 10</span></li>
+        <li>Game Room <span class="note">&mdash; Published Nov 9</span></li>
+      </ul></div>
+    </section>
+  </div>
+
+  <div class="talkbox">
+    <h3>&#128172; TALK TO GOKU</h3>
+    <p>Send a note to Goku. This works when the board is open on the Mac (it posts to the board inbox on this machine). Best-effort elsewhere.</p>
+    <form id="talk-form">
+      <input id="talk-input" type="text" placeholder="Type a message for Goku&hellip;" autocomplete="off">
+      <button type="submit">Send</button>
+    </form>
+    <div id="talk-status" aria-live="polite"></div>
+  </div>
+
+  <footer>Data: project HANDOFF.md files on the Mac, verified Nov 16, 2026 ~9:32 PM CT. LOCAL = done locally, not merged or published yet. The FlixKeep mobile fix-check failures and the quad two-player dependency are from the coordinator brief, not yet recorded in the HANDOFFs.</footer>
+</div>
+<script>
+  (function () {
+    var body = document.body;
+    var nightBtn = document.getElementById('night-btn');
+    var dayBtn = document.getElementById('day-btn');
+    function setMode(mode) {
+      body.classList.toggle('day', mode === 'day');
+      nightBtn.classList.toggle('on', mode !== 'day');
+      dayBtn.classList.toggle('on', mode === 'day');
+      try { localStorage.setItem('haan-bhai-mode', mode); } catch (e) {}
+    }
+    try {
+      if (localStorage.getItem('haan-bhai-mode') === 'day') setMode('day');
+    } catch (e) {}
+    nightBtn.addEventListener('click', function () { setMode('night'); });
+    dayBtn.addEventListener('click', function () { setMode('day'); });
+
+    var form = document.getElementById('talk-form');
+    var input = document.getElementById('talk-input');
+    var status = document.getElementById('talk-status');
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var text = input.value.trim();
+      if (!text) { status.textContent = 'Type a message first.'; return; }
+      status.textContent = 'Sending\u2026';
+      fetch('http://127.0.0.1:8765/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text, source: 'haan-bhai-board' })
+      }).then(function (resp) {
+        if (resp.ok) { status.textContent = 'Sent to Goku.'; input.value = ''; }
+        else { status.textContent = 'The Mac inbox did not accept it (HTTP ' + resp.status + ').'; }
+      }).catch(function () {
+        status.textContent = 'Could not reach the Mac inbox \u2014 this button works when the board is open on the Mac.';
+      });
+    });
+  })();
+</script>
+</body>
+</html>
