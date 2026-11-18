@@ -36,14 +36,14 @@
       },
       {
         "note": "DISPATCHED Nov 16, 2026 to a Codex worker — worktree `.worktrees/feature-vihaan-quad`, branch `feature/vihaan-quad` (from origin/main 1b39ba5), surface 1000090048 [terminal]. (First attempt: Claude agentSession surface 1000090044 came up with no agent process and never picked up the starter; rerouted to a Codex terminal surface per the Nov 10 fallback rule.) Vihaan's own ride, a red four-wheel quad, about 1.5x the bike's top speed; runs AFTER bike-speed lands. BLOCKED Nov 16, 2026 (21:06): worker ended task_complete — the quad cannot start until the two-player feature lands (worktree still at ee0688d; two-player merge/publish is the critical path). No code changed; do NOT nudge as a stall., surface 1000090048",
-        "tag": "waiting",
-        "tag_label": "WAITING",
+        "tag": "working",
+        "tag_label": "WORKING",
         "text": "Vihaan’s quad"
       },
       {
         "note": "DISPATCHED Nov 16, 2026 to a Codex worker — worktree `.worktrees/feature-capitals-quiz`, branch `feature/capitals-quiz` (from origin/main 1b39ba5), surface 1000090049 [terminal]. (Brief is the amended Nov 14 version: four 10-question quizzes — country capitals, US state capitals, country food, famous buildings; Stop button on every question, wrong answers never red.) COMPLETE Nov 16, 2026 — local commit e441a3c \"Build four kind quiz rounds\"., surface 1000090049",
-        "tag": "waiting",
-        "tag_label": "WAITING",
+        "tag": "working",
+        "tag_label": "WORKING",
         "text": "Capitals Quiz"
       },
       {
@@ -54,7 +54,7 @@
       }
     ]
   },
-  "as_of": "Tue Nov 17, 2026 · 7:40 PM CT",
+  "as_of": "Tue Nov 17, 2026 · 7:45 PM CT",
   "flixkeep": {
     "backlog": [
       {
