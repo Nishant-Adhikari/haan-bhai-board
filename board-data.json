@@ -46,9 +46,9 @@
         "text": "Capitals Quiz"
       },
       {
-        "note": "Done locally, not merged — COMPLETE locally Nov 17, 2026 (feature commit 1d21b5f, HANDOFF record 9313356, Chrome DevTools zero console errors; link, screenshots, click verified). Publish pending — runs once screen capture is back.",
-        "tag": "local",
-        "tag_label": "LOCAL",
+        "note": "PUBLISHED live Nov 18, 2026 (merge a8fe125, Pages run 44256079700 success, live-verified: reading.html 200 desktop + mobile, link visible, click opens aesop.html, zero console errors).",
+        "tag": null,
+        "tag_label": null,
         "text": "Reading → Aesop link"
       }
     ],
@@ -61,7 +61,7 @@
       }
     ]
   },
-  "as_of": "Wed Nov 18, 2026 · 1:08 AM CT",
+  "as_of": "Wed Nov 18, 2026 · 1:13 AM CT",
   "flixkeep": {
     "backlog": [
       {
