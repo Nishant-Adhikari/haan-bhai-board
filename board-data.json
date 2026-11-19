@@ -58,9 +58,16 @@
         "text": "Reading → Aesop link"
       }
     ],
-    "in_progress": []
+    "in_progress": [
+      {
+        "note": "DISPATCHED Nov 19, 2026 (Nishant's ask: work with Sally to improve home page; home-page items R5, R12, R13, R15, R3-home from sally-ux-review-2026-11-12.md; worker 1000090004).",
+        "tag": "working",
+        "tag_label": "WORKING",
+        "text": "FEATURE-BRIEF-sally-home-page-improvements.md"
+      }
+    ]
   },
-  "as_of": "Thu Nov 19, 2026 · 12:17 AM CT",
+  "as_of": "Thu Nov 19, 2026 · 12:22 AM CT",
   "flixkeep": {
     "backlog": [
       {
