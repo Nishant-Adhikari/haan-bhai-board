@@ -56,18 +56,17 @@
         "tag": null,
         "tag_label": null,
         "text": "Reading → Aesop link"
-      }
-    ],
-    "in_progress": [
+      },
       {
-        "note": "DISPATCHED Nov 19, 2026 (Nishant's ask: work with Sally to improve home page; home-page items R5, R12, R13, R15, R3-home from sally-ux-review-2026-11-12.md; worker 1000090004).",
-        "tag": "working",
-        "tag_label": "WORKING",
+        "note": "PUBLISHED live Nov 19, 2026 (merge dd4156a, Pages run 44500957374 success, live-verified desktop + mobile: grouped nav, Country Book label, footer \"Made with love by Ahaan.\", focus rings solid 3px, zero console errors; local commit 2dafccd).",
+        "tag": null,
+        "tag_label": null,
         "text": "FEATURE-BRIEF-sally-home-page-improvements.md"
       }
-    ]
+    ],
+    "in_progress": []
   },
-  "as_of": "Thu Nov 19, 2026 · 3:53 AM CT",
+  "as_of": "Thu Nov 19, 2026 · 3:58 AM CT",
   "flixkeep": {
     "backlog": [
       {
