@@ -66,7 +66,7 @@
     ],
     "in_progress": []
   },
-  "as_of": "Mon Nov 23, 2026 · 9:20 AM CT",
+  "as_of": "Mon Nov 23, 2026 · 9:25 AM CT",
   "flixkeep": {
     "backlog": [
       {
@@ -141,8 +141,8 @@
       },
       {
         "note": "DISPATCHED Nov 19, 2026 ~02:19 to worker 0003 (surface 1000090003) [terminal]. Nishant chose Newsletter fix karo Nov 19 02:17 - his explicit per-item word. Goal: the weekly newsletter workflow sends successfully. Steps: (1) verify commit 58e7a38 contains only the newsletter and weekly-picks fixes - if it bundles unrelated changes, stop and report; (2) check NEWSLETTER_FROM_EMAIL is set as a repo secret with gh secret list - if NOT set, stop and report that the value is needed, do not invent an address; (3) push the fix commit to main - push authorized for this item only; (4) trigger the newsletter workflow with gh workflow run and report the run ID; (5) wait for the run and report success or the failure reason from the run log. Do not touch the TMDB fix, do not deploy anything else, do not push any other branch. Update HANDOFF.md as you go., surface 1000090003",
-        "tag": "working",
-        "tag_label": "WORKING",
+        "tag": "waiting",
+        "tag_label": "WAITING",
         "text": "Newsletter fix follow-through"
       },
       {
